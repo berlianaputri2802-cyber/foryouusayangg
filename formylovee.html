@@ -1,0 +1,96 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Haii Sayanggkuu - Barcode</title>
+  <style>
+    :root{--pink1:#fff0f6;--pink2:#ffd6e8;--accent:#ff6b9d}
+    html,body{height:100%;margin:0}
+    body{display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--pink1),var(--pink2));font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#3b2b2b}
+    .wrap{width:360px;background:rgba(255,255,255,0.6);backdrop-filter:blur(6px);border-radius:16px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.08);position:relative;overflow:hidden}
+    h1{margin:0;font-size:1.2rem;text-align:center;color:var(--accent)}
+    .message{margin:14px 0;padding:12px;border-radius:10px;background:rgba(255,255,255,0.9);text-align:center;font-weight:600}
+    .controls{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    button{padding:8px 12px;border-radius:10px;border:0;background:var(--accent);color:white;cursor:pointer}
+    button.secondary{background:#ff9cc3}
+    #qr{display:flex;justify-content:center;margin-top:12px}
+
+    /* floating hearts */
+    .heart{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;font-size:18px;pointer-events:none}
+    @keyframes floatUpSlow{0%{transform:translate(-50%,0) scale(0.9);opacity:1}100%{transform:translate(-50%,-260px) scale(1.6);opacity:0}}
+    .floating{animation:floatUpSlow 6s ease-in-out forwards}
+  </style>
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Untuk M. Vicko Fabian 💌</h1>
+    <div class="message" id="messageText">Haii Sayanggkuu<br>Hug this, whenever you miss me.</div>
+
+    <div class="controls">
+      <button id="genBtn">Generate QR</button>
+      <button id="downloadBtn" class="secondary">Download</button>
+    </div>
+
+    <div id="qr"></div>
+    <div id="note" style="text-align:center;font-size:0.85rem;color:#6b4b57;margin-top:8px">Scan QR ini untuk baca pesannya ❤</div>
+  </div>
+
+  <script>
+    const genBtn = document.getElementById('genBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const qrContainer = document.getElementById('qr');
+    const messageText = document.getElementById('messageText').innerText.trim();
+
+    let qr;
+    function clearQR(){ qrContainer.innerHTML = ''; }
+
+    function createFloatingHearts(){
+      for(let i=0;i<7;i++){
+        setTimeout(()=>{
+          const h = document.createElement('div');
+          h.className='heart floating';
+          h.style.left = (20 + Math.random()*70) + '%';
+          h.style.fontSize = (12 + Math.random()*28) + 'px';
+          h.style.color = ['#ff9acb','#ffd1e8','#bfe9ff'][Math.floor(Math.random()*3)];
+          h.textContent = '❤';
+          document.querySelector('.wrap').appendChild(h);
+          setTimeout(()=> h.remove(), 6200);
+        }, i*180);
+      }
+    }
+
+    function generateQR(){
+      clearQR();
+      qr = new QRCode(qrContainer, {
+        text: messageText,
+        width: 220,
+        height: 220,
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      createFloatingHearts();
+    }
+
+    genBtn.addEventListener('click', ()=>{
+      generateQR();
+    });
+
+    downloadBtn.addEventListener('click', ()=>{
+      // try get canvas or img inside qrContainer
+      const img = qrContainer.querySelector('img');
+      const canvas = qrContainer.querySelector('canvas');
+      if(img){
+        const a = document.createElement('a'); a.href = img.src; a.download = 'pesan_qr.png'; a.click();
+      } else if(canvas){
+        const a = document.createElement('a'); a.href = canvas.toDataURL('image/png'); a.download = 'pesan_qr.png'; a.click();
+      } else alert('Belum ada QR. Klik Generate QR dulu.');
+    });
+
+    // auto generate on page load
+    window.addEventListener('load', ()=> setTimeout(generateQR,300));
+  </script>
+</body>
+</html>
