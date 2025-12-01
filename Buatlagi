@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Haii Sayanggkuu - Barcode</title>
+  <style>
+    :root{--pink1:#fff0f6;--pink2:#ffd6e8;--accent:#ff6b9d}
+    html,body{height:100%;margin:0}
+    body{display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--pink1),var(--pink2));font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#3b2b2b}
+    .wrap{width:360px;background:rgba(255,255,255,0.6);backdrop-filter:blur(6px);border-radius:16px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.08);position:relative;overflow:hidden}
+    h1{margin:0;font-size:1.2rem;text-align:center;color:var(--accent)}
+    .message{margin:14px 0;padding:12px;border-radius:10px;background:rgba(255,255,255,0.9);text-align:center;font-weight:600}
+    .controls{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    button{padding:8px 12px;border-radius:10px;border:0;background:var(--accent);color:white;cursor:pointer}
+    button.secondary{background:#ff9cc3}
+    #qr{display:flex;justify-content:center;margin-top:12px}
+
+    /* floating hearts */
+    .heart{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;font-size:18px;pointer-events:none}
+    @keyframes floatUpSlow{0%{transform:translate(-50%,0) scale(0.9);opacity:1}100%{transform:translate(-50%,-260px) scale(1.6);opacity:0}}
+    .floating{animation:floatUpSlow 6s ease-in-out forwards}
+
+    /* Heart QR overlay */
+    .qr-heart-overlay{
+      position:absolute;
+      width:220px;
+      height:220px;
+      pointer-events:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      top:0;
+      left:0;
+      animation:pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse{
+      0%{transform:scale(1)}
+      50%{transform:scale(1.12)}
+      100%{transform:scale(1)}
+    }
+
+    .qr-heart-overlay svg{
+      width:120px;
+      height:120px;
+      fill:#ff7fbf;
+      opacity:0.85;
+    }
+  </style>
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Untuk M. Vicko Fabian 💌</h1>
+    <div class="message" id="messageText">Haii Sayanggkuu<br>Hug this, whenever you miss me.</div>
+
+    <div class="controls">
+      <button id="genBtn">Click Me</button>
+    </div>
+
+    <div id="qr" style="position:relative;width:220px;height:220px;"></div>
+    <div id="note" style="text-align:center;font-size:0.85rem;color:#6b4b57;margin-top:8px">LOVE YOUUU ❤</div>
+  </div>
+
+  <script>
+    const genBtn = document.getElementById('genBtn');
+    const qrContainer = document.getElementById('qr');
+    const messageText = document.getElementById('messageText').innerText.trim();
+
+    let qr;
+    function clearQR(){ qrContainer.innerHTML = ''; }
+
+    function createFloatingHearts(){
+      for(let i=0;i<7;i++){
+        setTimeout(()=>{
+          const h = document.createElement('div');
+          h.className='heart floating';
+          h.style.left = (20 + Math.random()*70) + '%';
+          h.style.fontSize = (12 + Math.random()*28) + 'px';
+          h.style.color = ['#ff9acb','#ffd1e8','#bfe9ff'][Math.floor(Math.random()*3)];
+          h.textContent = '❤';
+          document.querySelector('.wrap').appendChild(h);
+          setTimeout(()=> h.remove(), 6200);
+        }, i*180);
+      }
+    }
+
+    function generateQR(){
+      clearQR();
+      // QR removed
+
+      // Add animated pink heart overlay
+      const overlay = document.createElement('div');
+      overlay.className = 'qr-heart-overlay';
+      overlay.innerHTML = `
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21s-6.7-4.35-10-9.14C-1.35 7.52.77 3.5 4.64 2.62 7.05 2.1 9.24 3.3 12 6c2.76-2.7 4.95-3.9 7.36-3.38 3.87.88 6 4.9 2.64 9.24C18.7 16.65 12 21 12 21z"/>
+        </svg>`;
+      // overlay removed
+
+      createFloatingHearts();
+    }
+
+    genBtn.addEventListener('click', ()=>{
+      generateQR();
+    });
+
+    window.addEventListener('load', ()=> setTimeout(generateQR,300));
+  </script>
+</body>
+</html>
