@@ -62,11 +62,34 @@ position:fixed;
 bottom:-20px;
 font-size:24px;
 animation:float 4s linear infinite;
+pointer-events:none;
 }
 
 @keyframes float{
 0%{transform:translateY(0);opacity:1;}
 100%{transform:translateY(-100vh);opacity:0;}
+}
+
+/* CONFETTI */
+
+.confetti{
+position:fixed;
+top:-10px;
+font-size:22px;
+animation:confettiFall 4s linear infinite;
+pointer-events:none;
+}
+
+@keyframes confettiFall{
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh) rotate(360deg);
+opacity:0;
+}
 }
 
 </style>
@@ -88,15 +111,23 @@ Wrong answer 😌 try again
 <h1 id="countdown"></h1>
 
 <div id="birthday">
-🎂 HAPPY BIRTHDAY MY LOVE, MINE ALL MINE❤️ <br><br>
+🎂 HAPPY BIRTHDAY MY LOVE, MINE ALL MINE🎉 <br><br>
 First, Thank you for being born, and for coming into my life🥹❤️
-  I hope this year brings you happiness,
-success, and everything you deserve.
+I hope this year brings you happiness,
+success, and everything you deserve😇
+
+<br><br>
 
 You've been working really hard, and carrying a lot of responsibility.
 Please remember to rest, drink enough water, and take care of yourself ya cayancuuu❤️
-You're health, your happiness mean sooo muchhh to me.
+
+<br><br>
+
+Your health, your happiness mean sooo muchhh to me cayankk🥹
 I'm really proud of you honeyy!❤️❤️❤️
+I hope we can see each other soon🥹❤️
+
+<br><br>
 
 Your real gift is coming soon yaa...🎁
 </div>
@@ -139,6 +170,10 @@ function startCountdown(){
 question.style.display="none"
 countdown.style.display="block"
 
+countdown.innerText="Wait a second, i have something for youu...❤️"
+
+setTimeout(function(){
+
 let count = 3
 countdown.innerText = count
 
@@ -161,6 +196,8 @@ showBirthday()
 
 },1000)
 
+},1500)
+
 }
 
 function showBirthday(){
@@ -168,6 +205,7 @@ function showBirthday(){
 birthday.style.display="block"
 
 setInterval(createHeart,300)
+setInterval(createConfetti,200)
 
 }
 
@@ -183,6 +221,24 @@ heart.style.left=Math.random()*100+"vw"
 document.body.appendChild(heart)
 
 setTimeout(()=>heart.remove(),4000)
+
+}
+
+function createConfetti(){
+
+const confetti = document.createElement("div")
+
+confetti.className="confetti"
+
+const shapes=["🎉","✨","🎊","💖"]
+
+confetti.innerHTML=shapes[Math.floor(Math.random()*shapes.length)]
+
+confetti.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(confetti)
+
+setTimeout(()=>confetti.remove(),4000)
 
 }
 
