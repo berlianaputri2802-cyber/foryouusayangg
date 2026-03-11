@@ -99,7 +99,7 @@ opacity:0;
 
 <div class="container">
 
-<h1 id="question">Are u ready? 😊🤍</h1>
+<h1 id="question">Do you still love me? 😊🤍</h1>
 
 <button id="yesBtn">Yes</button>
 <button id="noBtn">No</button>
@@ -111,7 +111,8 @@ Wrong answer 😌 try again
 <h1 id="countdown"></h1>
 
 <div id="birthday">
-🎂 HAPPY BIRTHDAY MY LOVE, MINE ALL MINE🎉 <br><br>
+  <h2 class="birthday-title">🎂 HAPPY BIRTHDAY MY LOVE, MINE ALL MINE🎉</h2>
+  <br><br>
 First, Thank you for being born, and for coming into my life...
 I hope this year brings you happiness,
 success, and everything you deserve😇
@@ -145,7 +146,7 @@ const birthday = document.getElementById("birthday")
 
 yesBtn.onclick = function(){
 
-question.innerText = "I miss you too 🤍"
+question.innerText = "I love you moree 🤍"
 yesBtn.style.display = "none"
 noBtn.style.display = "none"
 wrong.style.display = "none"
@@ -242,8 +243,54 @@ setTimeout(()=>confetti.remove(),4000)
 
 }
 
+<style>
+.birthday-title{
+font-size:32px;
+font-weight:bold;
+animation:bounceIn 1.5s ease, colorParty 3s infinite;
+}
+
+/* bounce muncul pertama */
+
+@keyframes bounceIn{
+
+0%{
+transform:scale(0.3);
+opacity:0;
+}
+
+50%{
+transform:scale(1.2);
+}
+
+70%{
+transform:scale(0.9);
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+/* warna berubah seperti lampu pesta */
+
+@keyframes colorParty{
+
+0%{color:#ff2e63;}
+25%{color:#ff9a00;}
+50%{color:#00c2ff;}
+75%{color:#9b59ff;}
+100%{color:#ff2e63;}
+
+}
+
+</style>
+
 </script>
 
 </body>
 </html>
+
 
