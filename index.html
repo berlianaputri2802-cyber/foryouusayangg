@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Birthday Surprise</title>
+<title>For You ❤️</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial, sans-serif;
-background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
+background:#ffe6f0;
 height:100vh;
 display:flex;
 justify-content:center;
@@ -18,8 +18,7 @@ text-align:center;
 }
 
 .container{
-position:relative;
-z-index:10;
+max-width:500px;
 }
 
 h1{
@@ -27,11 +26,11 @@ color:#ff2e63;
 }
 
 button{
-padding:12px 24px;
+padding:14px 28px;
 font-size:18px;
-margin:10px;
 border:none;
 border-radius:10px;
+margin:10px;
 cursor:pointer;
 }
 
@@ -55,11 +54,8 @@ color:#ff2e63;
 display:none;
 font-size:28px;
 color:#ff2e63;
-max-width:400px;
 margin-top:20px;
 }
-
-/* hearts */
 
 .heart{
 position:fixed;
@@ -71,20 +67,6 @@ animation:float 4s linear infinite;
 @keyframes float{
 0%{transform:translateY(0);opacity:1;}
 100%{transform:translateY(-100vh);opacity:0;}
-}
-
-/* confetti */
-
-.confetti{
-position:fixed;
-top:-10px;
-width:8px;
-height:8px;
-animation:fall 4s linear infinite;
-}
-
-@keyframes fall{
-to{transform:translateY(100vh) rotate(720deg);}
 }
 
 </style>
@@ -99,76 +81,72 @@ to{transform:translateY(100vh) rotate(720deg);}
 <button id="yesBtn">Yes</button>
 <button id="noBtn">No</button>
 
-<h2 id="wrong" style="display:none;color:#ff2e63;">Wrong answer 😌 try again</h2>
+<p id="wrong" style="display:none;color:#ff2e63;">
+Wrong answer 😌 try again
+</p>
 
 <h1 id="countdown"></h1>
 
 <div id="birthday">
-🎂 HAPPY BIRTHDAY MY LOVEE❤️ <br><br>
-I hope this year brings you happiness,  
-strength, and success.  
+🎂 HAPPY BIRTHDAY MY LOVEE ❤️ <br><br>
+I hope this year brings you happiness,
+success, and everything you deserve.
 You've been working really hard, and carrying a lot of responsibility byyy
 I'm really proud of you.
 please remember to rest, drink enough water, and take care of yourself ya cayancuuu
-You're health, your happiness mean sooo muchhh to me byy❤️
+You're health, your happiness mean sooo muchhh to me sayang
 ILY ILY ILY LIKE THERE'S NO TOMORROW
-More surprises are coming soon 🎁
+  More Surprises are coming soon...
 </div>
 
 </div>
 
 <script>
 
-const yesBtn=document.getElementById("yesBtn")
-const noBtn=document.getElementById("noBtn")
-const question=document.getElementById("question")
-const countdown=document.getElementById("countdown")
-const birthday=document.getElementById("birthday")
-const wrong=document.getElementById("wrong")
+const yesBtn = document.getElementById("yesBtn")
+const noBtn = document.getElementById("noBtn")
+const question = document.getElementById("question")
+const wrong = document.getElementById("wrong")
+const countdown = document.getElementById("countdown")
+const birthday = document.getElementById("birthday")
 
-/* YES CLICK */
+yesBtn.onclick = function(){
 
-yesBtn.onclick=function(){
-
-question.innerText="I miss you too 🤍"
-yesBtn.style.display="none"
-noBtn.style.display="none"
-wrong.style.display="none"
+question.innerText = "I miss you too 🤍"
+yesBtn.style.display = "none"
+noBtn.style.display = "none"
+wrong.style.display = "none"
 
 setTimeout(startCountdown,1500)
 
 }
 
-/* NO CLICK */
-
-noBtn.onclick=function(){
+noBtn.onclick = function(){
 
 wrong.style.display="block"
 
 noBtn.innerText="Yes 😏"
 noBtn.style.background="#4CAF50"
 
-noBtn.onclick=yesBtn.onclick
+noBtn.onclick = yesBtn.onclick
 
 }
-
-/* COUNTDOWN */
 
 function startCountdown(){
 
 question.style.display="none"
 countdown.style.display="block"
 
-let count=3
-countdown.innerText=count
+let count = 3
+countdown.innerText = count
 
-let timer=setInterval(function(){
+let timer = setInterval(function(){
 
 count--
 
 if(count>0){
 
-countdown.innerText=count
+countdown.innerText = count
 
 }else{
 
@@ -183,22 +161,18 @@ showBirthday()
 
 }
 
-/* SHOW BIRTHDAY */
-
 function showBirthday(){
 
 birthday.style.display="block"
 
 setInterval(createHeart,300)
-setInterval(createConfetti,150)
 
 }
 
-/* HEART */
-
 function createHeart(){
 
-let heart=document.createElement("div")
+const heart = document.createElement("div")
+
 heart.className="heart"
 heart.innerHTML="❤️"
 
@@ -207,22 +181,6 @@ heart.style.left=Math.random()*100+"vw"
 document.body.appendChild(heart)
 
 setTimeout(()=>heart.remove(),4000)
-
-}
-
-/* CONFETTI */
-
-function createConfetti(){
-
-let conf=document.createElement("div")
-conf.className="confetti"
-
-conf.style.left=Math.random()*100+"vw"
-conf.style.backgroundColor=hsl(${Math.random()*360},100%,50%)
-
-document.body.appendChild(conf)
-
-setTimeout(()=>conf.remove(),4000)
 
 }
 
