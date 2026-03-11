@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Birthday Surprise ❤️</title>
+<title>Birthday Surprise</title>
 
 <style>
 
@@ -15,24 +15,23 @@ display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
-overflow:hidden;
-}
-
-h1{
-font-size:40px;
-color:#ff2e63;
 }
 
 .container{
-z-index:2;
+position:relative;
+z-index:10;
+}
+
+h1{
+color:#ff2e63;
 }
 
 button{
-padding:12px 26px;
+padding:12px 24px;
 font-size:18px;
+margin:10px;
 border:none;
 border-radius:10px;
-margin:10px;
 cursor:pointer;
 }
 
@@ -54,14 +53,17 @@ color:#ff2e63;
 
 #birthday{
 display:none;
-font-size:30px;
+font-size:28px;
 color:#ff2e63;
-max-width:500px;
+max-width:400px;
+margin-top:20px;
 }
+
+/* hearts */
 
 .heart{
 position:fixed;
-bottom:-10px;
+bottom:-20px;
 font-size:24px;
 animation:float 4s linear infinite;
 }
@@ -71,11 +73,13 @@ animation:float 4s linear infinite;
 100%{transform:translateY(-100vh);opacity:0;}
 }
 
+/* confetti */
+
 .confetti{
 position:fixed;
+top:-10px;
 width:8px;
 height:8px;
-top:-10px;
 animation:fall 4s linear infinite;
 }
 
@@ -100,24 +104,18 @@ to{transform:translateY(100vh) rotate(720deg);}
 <h1 id="countdown"></h1>
 
 <div id="birthday">
-🎂 HAPPY BIRTHDAY MY LOVE❤️ <br><br>
-
-I hope this year brings you  
-more happiness, strength, and success. AAMIINN
+🎂 HAPPY BIRTHDAY MY LOVEE❤️ <br><br>
+I hope this year brings you happiness,  
+strength, and success.  
 You've been working really hard, and carrying a lot of responsibility byyy
 I'm really proud of you.
 please remember to rest, drink enough water, and take care of yourself ya cayancuuu
-You're health, your happiness mean sooo muchhh to me sayang
+You're health, your happiness mean sooo muchhh to me byy❤️
 ILY ILY ILY LIKE THERE'S NO TOMORROW
-  
-More surprises are coming soon... 🎁
+More surprises are coming soon 🎁
 </div>
 
 </div>
-
-<audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-to-you-piano-version-13976.mp3">
-</audio>
 
 <script>
 
@@ -127,9 +125,8 @@ const question=document.getElementById("question")
 const countdown=document.getElementById("countdown")
 const birthday=document.getElementById("birthday")
 const wrong=document.getElementById("wrong")
-const music=document.getElementById("music")
 
-/* CLICK YES */
+/* YES CLICK */
 
 yesBtn.onclick=function(){
 
@@ -142,7 +139,7 @@ setTimeout(startCountdown,1500)
 
 }
 
-/* CLICK NO */
+/* NO CLICK */
 
 noBtn.onclick=function(){
 
@@ -150,8 +147,6 @@ wrong.style.display="block"
 
 noBtn.innerText="Yes 😏"
 noBtn.style.background="#4CAF50"
-
-/* change function so it becomes YES */
 
 noBtn.onclick=yesBtn.onclick
 
@@ -165,7 +160,6 @@ question.style.display="none"
 countdown.style.display="block"
 
 let count=3
-
 countdown.innerText=count
 
 let timer=setInterval(function(){
@@ -173,9 +167,10 @@ let timer=setInterval(function(){
 count--
 
 if(count>0){
+
 countdown.innerText=count
-}
-else{
+
+}else{
 
 clearInterval(timer)
 
@@ -193,7 +188,6 @@ showBirthday()
 function showBirthday(){
 
 birthday.style.display="block"
-music.play()
 
 setInterval(createHeart,300)
 setInterval(createConfetti,150)
@@ -209,7 +203,6 @@ heart.className="heart"
 heart.innerHTML="❤️"
 
 heart.style.left=Math.random()*100+"vw"
-heart.style.fontSize=(20+Math.random()*30)+"px"
 
 document.body.appendChild(heart)
 
