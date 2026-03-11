@@ -1,113 +1,239 @@
-<!doctype html>
-<html lang="id">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Haii Sayanggkuu - Barcode</title>
-  <style>
-    :root{--pink1:#fff0f6;--pink2:#ffd6e8;--accent:#ff6b9d}
-    html,body{height:100%;margin:0}
-    body{display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--pink1),var(--pink2));font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#3b2b2b}
-    .wrap{width:360px;background:rgba(255,255,255,0.6);backdrop-filter:blur(6px);border-radius:16px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.08);position:relative;overflow:hidden}
-    h1{margin:0;font-size:1.2rem;text-align:center;color:var(--accent)}
-    .message{margin:14px 0;padding:12px;border-radius:10px;background:rgba(255,255,255,0.9);text-align:center;font-weight:600}
-    .controls{display:flex;gap:8px;justify-content:center;margin-top:10px}
-    button{padding:8px 12px;border-radius:10px;border:0;background:var(--accent);color:white;cursor:pointer}
-    button.secondary{background:#ff9cc3}
-    #qr{display:flex;justify-content:center;margin-top:12px}
+<meta charset="UTF-8">
+<title>Birthday Surprise ❤️</title>
 
-    /* floating hearts */
-    .heart{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;font-size:18px;pointer-events:none}
-    @keyframes floatUpSlow{0%{transform:translate(-50%,0) scale(0.9);opacity:1}100%{transform:translate(-50%,-260px) scale(1.6);opacity:0}}
-    .floating{animation:floatUpSlow 6s ease-in-out forwards}
+<style>
 
-    /* Heart QR overlay */
-    .qr-heart-overlay{
-      position:absolute;
-      width:220px;
-      height:220px;
-      pointer-events:none;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      top:0;
-      left:0;
-      animation:pulse 2s infinite ease-in-out;
-    }
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+overflow:hidden;
+}
 
-    @keyframes pulse{
-      0%{transform:scale(1)}
-      50%{transform:scale(1.12)}
-      100%{transform:scale(1)}
-    }
+h1{
+font-size:40px;
+color:#ff2e63;
+}
 
-    .qr-heart-overlay svg{
-      width:120px;
-      height:120px;
-      fill:#ff7fbf;
-      opacity:0.85;
-    }
-  </style>
-  <!-- Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+.container{
+z-index:2;
+}
+
+button{
+padding:12px 26px;
+font-size:18px;
+border:none;
+border-radius:10px;
+margin:10px;
+cursor:pointer;
+}
+
+#yesBtn{
+background:#4CAF50;
+color:white;
+}
+
+#noBtn{
+background:#ff4d4d;
+color:white;
+}
+
+#countdown{
+font-size:60px;
+display:none;
+color:#ff2e63;
+}
+
+#birthday{
+display:none;
+font-size:30px;
+color:#ff2e63;
+max-width:500px;
+}
+
+.heart{
+position:fixed;
+bottom:-10px;
+font-size:24px;
+animation:float 4s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-100vh);opacity:0;}
+}
+
+.confetti{
+position:fixed;
+width:8px;
+height:8px;
+top:-10px;
+animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+to{transform:translateY(100vh) rotate(720deg);}
+}
+
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>Untuk M. Vicko Fabian 💌</h1>
-    <div class="message" id="messageText">Haii Sayanggkuu<br>Hug this, whenever you miss me.</div>
 
-    <div class="controls">
-      <button id="genBtn">Click Me</button>
-    </div>
+<div class="container">
 
-    <div id="qr" style="position:relative;width:220px;height:220px;"></div>
-    <div id="note" style="text-align:center;font-size:0.85rem;color:#6b4b57;margin-top:8px">LOVE YOUUU ❤</div>
-  </div>
+<h1 id="question">Do you miss me? 🤍</h1>
 
-  <script>
-    const genBtn = document.getElementById('genBtn');
-    const qrContainer = document.getElementById('qr');
-    const messageText = document.getElementById('messageText').innerText.trim();
+<button id="yesBtn">Yes</button>
+<button id="noBtn">No</button>
 
-    let qr;
-    function clearQR(){ qrContainer.innerHTML = ''; }
+<h2 id="wrong" style="display:none;color:#ff2e63;">Wrong answer 😌 try again</h2>
 
-    function createFloatingHearts(){
-      for(let i=0;i<7;i++){
-        setTimeout(()=>{
-          const h = document.createElement('div');
-          h.className='heart floating';
-          h.style.left = (20 + Math.random()*70) + '%';
-          h.style.fontSize = (12 + Math.random()*28) + 'px';
-          h.style.color = ['#ff9acb','#ffd1e8','#bfe9ff'][Math.floor(Math.random()*3)];
-          h.textContent = '❤';
-          document.querySelector('.wrap').appendChild(h);
-          setTimeout(()=> h.remove(), 6200);
-        }, i*180);
-      }
-    }
+<h1 id="countdown"></h1>
 
-    function generateQR(){
-      clearQR();
-      // QR removed
+<div id="birthday">
+🎂 HAPPY BIRTHDAY MY LOVE❤️ <br><br>
 
-      // Add animated pink heart overlay
-      const overlay = document.createElement('div');
-      overlay.className = 'qr-heart-overlay';
-      overlay.innerHTML = `
-        <svg viewBox="0 0 24 24">
-          <path d="M12 21s-6.7-4.35-10-9.14C-1.35 7.52.77 3.5 4.64 2.62 7.05 2.1 9.24 3.3 12 6c2.76-2.7 4.95-3.9 7.36-3.38 3.87.88 6 4.9 2.64 9.24C18.7 16.65 12 21 12 21z"/>
-        </svg>`;
-      // overlay removed
+I hope this year brings you  
+more happiness, strength, and success. AAMIINN
+You've been working really hard, and carrying a lot of responsibility byyy
+I'm really proud of you.
+please remember to rest, drink enough water, and take care of yourself ya cayancuuu
+You're health, your happiness mean sooo muchhh to me sayang
+ILY ILY ILY LIKE THERE'S NO TOMORROW
+  
+More surprises are coming soon... 🎁
+</div>
 
-      createFloatingHearts();
-    }
+</div>
 
-    genBtn.addEventListener('click', ()=>{
-      generateQR();
-    });
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-to-you-piano-version-13976.mp3">
+</audio>
 
-    window.addEventListener('load', ()=> setTimeout(generateQR,300));
-  </script>
+<script>
+
+const yesBtn=document.getElementById("yesBtn")
+const noBtn=document.getElementById("noBtn")
+const question=document.getElementById("question")
+const countdown=document.getElementById("countdown")
+const birthday=document.getElementById("birthday")
+const wrong=document.getElementById("wrong")
+const music=document.getElementById("music")
+
+/* CLICK YES */
+
+yesBtn.onclick=function(){
+
+question.innerText="I miss you too 🤍"
+yesBtn.style.display="none"
+noBtn.style.display="none"
+wrong.style.display="none"
+
+setTimeout(startCountdown,1500)
+
+}
+
+/* CLICK NO */
+
+noBtn.onclick=function(){
+
+wrong.style.display="block"
+
+noBtn.innerText="Yes 😏"
+noBtn.style.background="#4CAF50"
+
+/* change function so it becomes YES */
+
+noBtn.onclick=yesBtn.onclick
+
+}
+
+/* COUNTDOWN */
+
+function startCountdown(){
+
+question.style.display="none"
+countdown.style.display="block"
+
+let count=3
+
+countdown.innerText=count
+
+let timer=setInterval(function(){
+
+count--
+
+if(count>0){
+countdown.innerText=count
+}
+else{
+
+clearInterval(timer)
+
+countdown.style.display="none"
+showBirthday()
+
+}
+
+},1000)
+
+}
+
+/* SHOW BIRTHDAY */
+
+function showBirthday(){
+
+birthday.style.display="block"
+music.play()
+
+setInterval(createHeart,300)
+setInterval(createConfetti,150)
+
+}
+
+/* HEART */
+
+function createHeart(){
+
+let heart=document.createElement("div")
+heart.className="heart"
+heart.innerHTML="❤️"
+
+heart.style.left=Math.random()*100+"vw"
+heart.style.fontSize=(20+Math.random()*30)+"px"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),4000)
+
+}
+
+/* CONFETTI */
+
+function createConfetti(){
+
+let conf=document.createElement("div")
+conf.className="confetti"
+
+conf.style.left=Math.random()*100+"vw"
+conf.style.backgroundColor=hsl(${Math.random()*360},100%,50%)
+
+document.body.appendChild(conf)
+
+setTimeout(()=>conf.remove(),4000)
+
+}
+
+</script>
+
 </body>
 </html>
