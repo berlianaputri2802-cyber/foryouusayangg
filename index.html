@@ -122,7 +122,7 @@ button{
   <h1 id="countdown"></h1>
 
   <div id="birthday">
-    <h2 class="birthday-title">🎂🎉 HAPPY BIRTHDAY MY LOVE ❤️🎉</h2>
+    <h2 class="birthday-title">🎂 HAPPY BIRTHDAY MY LOVE 🎉</h2>
     <br><br>
     First, Thank you for being born, and for coming into my life...
     I hope this year brings you happiness, success, and everything you deserve😇
@@ -131,13 +131,13 @@ button{
     Please remember to rest, drink enough water, and take care of yourself ya cayancuuu❤️
     <br><br>
     Your health, your happiness mean sooo muchhh to me cayankk🥹
-    I'm really proud of you honeyy!❤️❤️
+    I'm really proud of you honeyy!❤️❤️❤️
     I hope we can see each other soon🫂❤️
     <br><br>
     Your real gift is coming soon yaa...🎁
-
      <br><br>
     Yours, Berliana❤️
+    
   </div>
 </div>
 
@@ -191,7 +191,7 @@ function showBirthday(){
   setInterval(createConfetti,200)
 }
 
-  function createHeart(){
+function createHeart(){
   const heart = document.createElement("div")
   heart.className="heart"
   heart.innerHTML="❤️"
@@ -203,7 +203,7 @@ function showBirthday(){
 function createConfetti(){
   const confetti = document.createElement("div")
   confetti.className="confetti"
-  const shapes=["🎉","✨","🎊","💖",🎁","💋","🥰","💐"]
+  const shapes=["🎉","✨","🎊","💖",❤️"]
   confetti.innerHTML=shapes[Math.floor(Math.random()*shapes.length)]
   confetti.style.left=Math.random()*100+"vw"
   document.body.appendChild(confetti)
@@ -213,5 +213,3 @@ function createConfetti(){
 
 </body>
 </html>
-
-
