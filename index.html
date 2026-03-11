@@ -54,6 +54,8 @@ button{
   font-size:28px;
   color:#ff2e63;
   margin-top:20px;
+  opacity:0;
+  transition: opacity 1.5s ease;
 }
 
 /* HEARTS */
@@ -90,6 +92,8 @@ button{
   font-weight:bold;
   animation:partyBounce 1.2s ease, partyGlow 2s infinite alternate;
   text-shadow:0 0 10px #fff,0 0 20px #ff2e63;
+  opacity:0;
+  animation-fill-mode:forwards;
 }
 
 @keyframes partyBounce{
@@ -122,7 +126,7 @@ button{
   <h1 id="countdown"></h1>
 
   <div id="birthday">
-    <h2 class="birthday-title">🎂 HAPPY BIRTHDAY MY LOVE 🎉</h2>
+    <h2 class="birthday-title">🎂 HAPPY BIRTHDAY MY LOVE🎉</h2>
     <br><br>
     First, Thank you for being born, and for coming into my life...
     I hope this year brings you happiness, success, and everything you deserve😇
@@ -135,80 +139,90 @@ button{
     I hope we can see each other soon🫂❤️
     <br><br>
     Your real gift is coming soon yaa...🎁
-     <br><br>
-    Yours, Berliana❤️
-    
+    <br><br>
+    ❤️Yours, Berliana❤️
   </div>
 </div>
 
 <script>
-const yesBtn = document.getElementById("yesBtn")
-const noBtn = document.getElementById("noBtn")
-const question = document.getElementById("question")
-const wrong = document.getElementById("wrong")
-const countdown = document.getElementById("countdown")
-const birthday = document.getElementById("birthday")
+document.addEventListener("DOMContentLoaded", function(){
 
-yesBtn.onclick = function(){
-  question.innerText = "I love you moree 🤍"
-  yesBtn.style.display = "none"
-  noBtn.style.display = "none"
-  wrong.style.display = "none"
-  setTimeout(startCountdown,1500)
-}
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const question = document.getElementById("question");
+  const wrong = document.getElementById("wrong");
+  const countdown = document.getElementById("countdown");
+  const birthday = document.getElementById("birthday");
+  const birthdayTitle = birthday.querySelector(".birthday-title");
 
-noBtn.onclick = function(){
-  wrong.style.display="block"
-  noBtn.innerText="Yes 😏"
-  noBtn.style.background="#4CAF50"
-  noBtn.onclick = yesBtn.onclick
-}
+  // Function untuk tombol Yes
+  function handleYes(){
+    question.innerText = "I love you moree 🤍";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    wrong.style.display = "none";
+    setTimeout(startCountdown,1500);
+  }
 
-function startCountdown(){
-  question.style.display="none"
-  countdown.style.display="block"
-  countdown.innerText="Wait a second, i have something for youu...❤️"
-  
+  // Tombol Yes
+  yesBtn.onclick = handleYes;
+
+  // Tombol No berubah jadi Yes
+  noBtn.onclick = function(){
+    wrong.style.display="block";
+    noBtn.innerText="Yes 😏";
+    noBtn.style.background="#4CAF50";
+    noBtn.onclick = handleYes;
+  }
+
+  function startCountdown(){
+    question.style.display="none";
+    countdown.style.display="block";
+    countdown.innerText="Wait a second, i have something for youu...❤️";
+
   setTimeout(function(){
-    let count = 3
-    countdown.innerText = count
-    let timer = setInterval(function(){
-      count--
-      if(count>0){
-        countdown.innerText = count
-      }else{
-        clearInterval(timer)
-        countdown.style.display="none"
-        showBirthday()
-      }
-    },1000)
-  },1500)
-}
+      let count = 3;
+      countdown.innerText = count;
+      let timer = setInterval(function(){
+        count--;
+        if(count>0){
+          countdown.innerText = count;
+        }else{
+          clearInterval(timer);
+          countdown.style.display="none";
+          showBirthday();
+        }
+      },1000)
+    },1500)
+  }
 
-function showBirthday(){
-  birthday.style.display="block"
-  setInterval(createHeart,300)
-  setInterval(createConfetti,200)
-}
+  function showBirthday(){
+    birthday.style.display="block";
+    birthdayTitle.style.opacity = 1; // fade in
+    setInterval(createHeart,300);
+    setInterval(createConfetti,200);
+  }
 
-function createHeart(){
-  const heart = document.createElement("div")
-  heart.className="heart"
-  heart.innerHTML="❤️"
-  heart.style.left=Math.random()*100+"vw"
-  document.body.appendChild(heart)
-  setTimeout(()=>heart.remove(),4000)
-}
+  function createHeart(){
+    const heart = document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),4000);
+  }
 
-function createConfetti(){
-  const confetti = document.createElement("div")
-  confetti.className="confetti"
-  const shapes=["🎉","✨","🎊","💖",❤️"]
-  confetti.innerHTML=shapes[Math.floor(Math.random()*shapes.length)]
-  confetti.style.left=Math.random()*100+"vw"
-  document.body.appendChild(confetti)
-  setTimeout(()=>confetti.remove(),4000)
-}
+  function createConfetti(){
+    const confetti = document.createElement("div");
+    confetti.className="confetti";
+    const shapes=["🎉","✨","🎊","💖"];
+    confetti.innerHTML=shapes[Math.floor(Math.random()*shapes.length)];
+    confetti.style.left=Math.random()*100+"vw";
+    document.body.appendChild(confetti);
+    setTimeout(()=>confetti.remove(),4000);
+  }
+
+});
 </script>
 
 </body>
