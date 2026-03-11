@@ -15,12 +15,10 @@ display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
-overflow:hidden;
 }
 
 .container{
 max-width:500px;
-z-index:2;
 }
 
 h1{
@@ -59,12 +57,6 @@ color:#ff2e63;
 margin-top:20px;
 }
 
-#giftBtn{
-display:none;
-background:#ff2e63;
-color:white;
-}
-
 .heart{
 position:fixed;
 bottom:-20px;
@@ -84,7 +76,7 @@ animation:float 4s linear infinite;
 
 <div class="container">
 
-<h1 id="question">Do you miss me? 🤍</h1>
+<h1 id="question">Do you still love me? 😊🤍</h1>
 
 <button id="yesBtn">Yes</button>
 <button id="noBtn">No</button>
@@ -96,51 +88,49 @@ Wrong answer 😌 try again
 <h1 id="countdown"></h1>
 
 <div id="birthday">
-🎂 HAPPY BIRTHDAY ❤️ <br><br>
-I hope this year brings you happiness,
+🎂 HAPPY BIRTHDAY MY LOVE, MINE ALL MINE❤️ <br><br>
+First, Thank you for being born, and for coming into my life🥹❤️
+  I hope this year brings you happiness,
 success, and everything you deserve.
+
+You've been working really hard, and carrying a lot of responsibility.
+Please remember to rest, drink enough water, and take care of yourself ya cayancuuu❤️
+You're health, your happiness mean sooo muchhh to me.
+I'm really proud of you honeyy!❤️❤️❤️
+
+Your real gift is coming soon yaa...🎁
 </div>
 
-<br>
-
-<button id="giftBtn">Open your gift 🎁</button>
-
 </div>
-
-<audio id="music">
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-to-you-piano-version-13976.mp3">
-</audio>
 
 <script>
 
-const yesBtn=document.getElementById("yesBtn")
-const noBtn=document.getElementById("noBtn")
-const question=document.getElementById("question")
-const wrong=document.getElementById("wrong")
-const countdown=document.getElementById("countdown")
-const birthday=document.getElementById("birthday")
-const giftBtn=document.getElementById("giftBtn")
-const music=document.getElementById("music")
+const yesBtn = document.getElementById("yesBtn")
+const noBtn = document.getElementById("noBtn")
+const question = document.getElementById("question")
+const wrong = document.getElementById("wrong")
+const countdown = document.getElementById("countdown")
+const birthday = document.getElementById("birthday")
 
-yesBtn.onclick=function(){
+yesBtn.onclick = function(){
 
-question.innerText="I miss you too 🤍"
-yesBtn.style.display="none"
-noBtn.style.display="none"
-wrong.style.display="none"
+question.innerText = "I miss you too 🤍"
+yesBtn.style.display = "none"
+noBtn.style.display = "none"
+wrong.style.display = "none"
 
 setTimeout(startCountdown,1500)
 
 }
 
-noBtn.onclick=function(){
+noBtn.onclick = function(){
 
 wrong.style.display="block"
 
 noBtn.innerText="Yes 😏"
 noBtn.style.background="#4CAF50"
 
-noBtn.onclick=yesBtn.onclick
+noBtn.onclick = yesBtn.onclick
 
 }
 
@@ -149,16 +139,16 @@ function startCountdown(){
 question.style.display="none"
 countdown.style.display="block"
 
-let count=3
-countdown.innerText=count
+let count = 3
+countdown.innerText = count
 
-let timer=setInterval(function(){
+let timer = setInterval(function(){
 
 count--
 
 if(count>0){
 
-countdown.innerText=count
+countdown.innerText = count
 
 }else{
 
@@ -176,9 +166,6 @@ showBirthday()
 function showBirthday(){
 
 birthday.style.display="block"
-giftBtn.style.display="inline-block"
-
-music.play()
 
 setInterval(createHeart,300)
 
@@ -186,7 +173,7 @@ setInterval(createHeart,300)
 
 function createHeart(){
 
-let heart=document.createElement("div")
+const heart = document.createElement("div")
 
 heart.className="heart"
 heart.innerHTML="❤️"
@@ -196,12 +183,6 @@ heart.style.left=Math.random()*100+"vw"
 document.body.appendChild(heart)
 
 setTimeout(()=>heart.remove(),4000)
-
-}
-
-giftBtn.onclick=function(){
-
-alert("Your real gift is coming soon… 🎁")
 
 }
 
